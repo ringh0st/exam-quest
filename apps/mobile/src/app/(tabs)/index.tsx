@@ -10,7 +10,7 @@ export default function QuestsScreen() {
       <EmptyState
         title={t('quests.emptyTitle')}
         body={t('quests.emptyBody')}
-        action={{ label: t('quests.emptyAction'), onPress: () => router.navigate('/exams') }}
+        action={{ label: t('quests.emptyAction'), onPress: () => router.push('/exams/new') }}
       />
     </Screen>
   );

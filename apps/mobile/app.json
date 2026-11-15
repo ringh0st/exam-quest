@@ -21,7 +21,13 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "plugins": ["expo-router", "expo-localization", "expo-font", "expo-splash-screen"],
+    "plugins": [
+      "expo-router",
+      "expo-localization",
+      "expo-font",
+      "expo-splash-screen",
+      "@react-native-community/datetimepicker"
+    ],
     "scheme": "examquest",
     "experiments": {
       "typedRoutes": true

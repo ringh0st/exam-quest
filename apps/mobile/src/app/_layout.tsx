@@ -23,7 +23,9 @@ function ThemedStack() {
           headerShown: false,
           contentStyle: { backgroundColor: theme.colors.background },
         }}
-      />
+      >
+        <Stack.Screen name="exams/new" options={{ presentation: 'modal' }} />
+      </Stack>
     </>
   );
 }

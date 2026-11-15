@@ -6,3 +6,5 @@ export { ProgressBar, type ProgressBarProps } from './ProgressBar';
 export { ToggleRow, type ToggleRowProps } from './ToggleRow';
 export { Screen, type ScreenProps } from './Screen';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
+export { TextField, type TextFieldProps } from './TextField';
+export { ErrorText, type ErrorTextProps } from './ErrorText';
