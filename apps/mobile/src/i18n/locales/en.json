@@ -138,7 +138,7 @@
     "reminders": "Reminders",
     "remindersDescription": "At most one a day. Never during school hours or at night.",
     "studyTime": "Study reminder time",
-    "permissionDenied": "Notifications are turned off for Exam Quest. Turn them on in your phone settings to get reminders."
+    "permissionDenied": "Notifications are turned off for Quest Note. Turn them on in your phone settings to get reminders."
   },
   "subjects": {
     "motherTongue": "Mother tongue",
