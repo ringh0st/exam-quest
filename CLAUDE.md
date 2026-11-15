@@ -40,6 +40,8 @@ SDK. In sandboxes where Expo's API is unreachable, use `EXPO_OFFLINE=1 npx expo 
 
 ### Design system first
 
+- Style with `makeStyles((t) => …)` from `@exam-quest/ui`; values come from `t.colors`, `t.space`,
+  `t.radius`, `t.textStyle`. Lint blocks literal colours and sizes inside `makeStyles` too.
 - Build screens from `@exam-quest/ui` components. App code may not import `Pressable`, `Touchable*`,
   `Button` or `Image` from `react-native` (lint-enforced); add or extend a UI component instead.
 - A new visual need means a new token or component variant, with a preview and tests.
@@ -48,7 +50,8 @@ SDK. In sandboxes where Expo's API is unreachable, use `EXPO_OFFLINE=1 npx expo 
 ### Accessibility: WCAG 2.2 AA, always
 
 - Every interactive element has a role, label and state; UI components require labels in their types.
-- Contrast ≥ 4.5:1 for text, ≥ 3:1 for large text and icons. Token pairs are tested in CI.
+- Contrast ≥ 4.5:1 for text, ≥ 3:1 for large text and icons. Theme colour pairs are tested in CI
+  (`packages/ui/src/theme/__tests__/themes.test.ts`); add a pair there when a component uses a new one.
 - Respect the system font scale up to 200%; layouts reflow, nothing truncates important text.
 - Touch targets ≥ 44×44 pt (48 dp).
 - Colour is never the only signal (pair it with an icon or text).
