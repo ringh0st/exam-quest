@@ -1,3 +1,5 @@
+import type { FontFaceSet } from '../tokens/typography';
+
 /** Semantic colours. Components use only these, so every theme works with every component. */
 export interface ThemeColors {
   /** Screen background. */
@@ -42,6 +44,8 @@ export interface Theme {
   colors: ThemeColors;
   /** Whether game elements (XP, streaks, chests, raised edges, celebrations) are shown. */
   playful: boolean;
+  /** Font faces for each weight. */
+  fonts: FontFaceSet;
   /** Status bar / native control appearance. */
   scheme: 'light' | 'dark';
 }

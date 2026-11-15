@@ -1,4 +1,5 @@
 import { palette } from '../tokens/palette';
+import { fontFaces } from '../tokens/typography';
 import type { Theme, ThemeName } from './types';
 
 const { violet, coral, mint, amber, neutral, calm, white } = palette;
@@ -7,6 +8,7 @@ export const lightTheme: Theme = {
   name: 'light',
   scheme: 'light',
   playful: true,
+  fonts: fontFaces.brand,
   colors: {
     background: violet[50],
     surface: white,
@@ -40,6 +42,7 @@ export const darkTheme: Theme = {
   name: 'dark',
   scheme: 'dark',
   playful: true,
+  fonts: fontFaces.brand,
   colors: {
     background: violet[950],
     surface: violet[900],
@@ -74,6 +77,7 @@ export const calmTheme: Theme = {
   name: 'calm',
   scheme: 'light',
   playful: false,
+  fonts: fontFaces.calm,
   colors: {
     background: calm.paper,
     surface: calm.surface,

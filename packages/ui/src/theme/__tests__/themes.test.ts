@@ -28,6 +28,9 @@ const nonTextPairs: Pair[] = [
   ['focusRing', 'background'],
   ['focusRing', 'surface'],
   ['primary', 'surface'],
+  // Progress bar fills on their track.
+  ['primary', 'surfaceSunken'],
+  ['accent', 'surfaceSunken'],
 ];
 
 describe.each(Object.values(themes))('$name theme', (theme) => {

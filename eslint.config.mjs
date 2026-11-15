@@ -80,6 +80,10 @@ export default [
   },
   {
     files: ['**/__tests__/**', '**/*.test.{ts,tsx}', '**/jest.setup.ts'],
+    rules: {
+      // Test fixtures may use literal text; the rule protects user-facing screens.
+      'react/jsx-no-literals': 'off',
+    },
     languageOptions: {
       globals: { jest: 'readonly', describe: 'readonly', it: 'readonly', expect: 'readonly' },
     },

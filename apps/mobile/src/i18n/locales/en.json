@@ -2,5 +2,37 @@
   "home": {
     "title": "Exam Quest",
     "subtitle": "Snap your book. Beat the test."
+  },
+  "dev": {
+    "components": {
+      "title": "Components",
+      "intro": "Every component from the design system, in the current theme. Developer builds only.",
+      "text": "Text",
+      "buttons": "Buttons",
+      "startLevel": "Start level",
+      "addExam": "Add exam",
+      "later": "Later",
+      "skip": "Skip word",
+      "saving": "Saving",
+      "chips": "Chips",
+      "biology": "Biology",
+      "math": "Math",
+      "history": "History",
+      "progress": "Progress",
+      "readiness": "Test readiness",
+      "cards": "Cards",
+      "cardTitle": "Biology test",
+      "cardBody": "Friday, Nov 20 · 5 days",
+      "toggles": "Toggles",
+      "calmMode": "Calm mode",
+      "calmModeDescription": "No XP, streaks or boss fights",
+      "sample": {
+        "display": "Display",
+        "title": "Title",
+        "heading": "Heading",
+        "body": "Body text for lessons and explanations.",
+        "caption": "Caption · From your page 2"
+      }
+    }
   }
 }
