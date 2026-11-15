@@ -47,7 +47,52 @@
   "exams": {
     "title": "My exams",
     "emptyTitle": "No exams yet",
-    "emptyBody": "Add an exam in three taps: subject, date, done. Mentora plans your study days up to it."
+    "emptyBody": "Add an exam in three taps: subject, date, done. Mentora plans your study days up to it.",
+    "add": "Add exam",
+    "addHint": "Opens a short form: subject, date, done",
+    "nextUp": "Next up",
+    "upcoming": "Coming up",
+    "past": "Past exams",
+    "countdown": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "inDays_one": "In {{count}} day",
+      "inDays_other": "In {{count}} days",
+      "past": "Done"
+    },
+    "cardLabel": "{{subject}}, {{date}}, {{countdown}}",
+    "new": {
+      "title": "Add an exam",
+      "subject": "Subject",
+      "other": "Other",
+      "customSubject": "Subject name",
+      "customSubjectError": "Enter the subject name",
+      "date": "Date",
+      "tomorrow": "Tomorrow",
+      "nextWeek": "Next week",
+      "pickDate": "Pick a date",
+      "chosenDate": "Exam on {{date}}",
+      "topic": "Topic (optional)",
+      "topicHint": "For example: Chemical bonds, chapter 5",
+      "save": "Add exam",
+      "saveHint": "Saves the exam and returns to your list",
+      "cancel": "Cancel",
+      "saved": "Exam added: {{subject}}, {{date}}",
+      "subjectError": "Choose a subject",
+      "dateError": "Choose a date"
+    },
+    "detail": {
+      "back": "Back",
+      "topic": "Topic",
+      "delete": "Delete exam",
+      "deleteConfirmTitle": "Delete this exam?",
+      "deleteConfirmBody": "Its study plan and reminders are removed too.",
+      "deleteConfirm": "Delete",
+      "keep": "Keep",
+      "notFoundTitle": "Exam not found",
+      "notFoundBody": "It may have been deleted."
+    },
+    "dateAndCountdown": "{{date}} · {{countdown}}"
   },
   "add": {
     "title": "What are we studying?",
@@ -80,5 +125,26 @@
       "source": "Same as my material",
       "en": "Always English"
     }
+  },
+  "subjects": {
+    "motherTongue": "Mother tongue",
+    "finnish": "Finnish",
+    "swedish": "Swedish",
+    "english": "English",
+    "german": "German",
+    "french": "French",
+    "spanish": "Spanish",
+    "math": "Math",
+    "physics": "Physics",
+    "chemistry": "Chemistry",
+    "biology": "Biology",
+    "geography": "Geography",
+    "history": "History",
+    "socialStudies": "Social studies",
+    "religion": "Religion",
+    "ethics": "Ethics",
+    "philosophy": "Philosophy",
+    "psychology": "Psychology",
+    "healthEducation": "Health education"
   }
 }

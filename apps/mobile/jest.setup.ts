@@ -10,3 +10,9 @@ jest.mock(
 jest.mock('@react-native-async-storage/async-storage', () =>
   jest.requireActual('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
+
+// expo-crypto's native module is not available in Jest; Node provides the same UUID function.
+jest.mock('expo-crypto', () => ({
+  ...jest.requireActual<object>('expo-crypto'),
+  randomUUID: () => jest.requireActual<{ randomUUID: () => string }>('crypto').randomUUID(),
+}));

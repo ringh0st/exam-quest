@@ -1,5 +1,7 @@
 import { z } from 'zod';
 
+import { subjectIds } from '../features/exams/subjects';
+
 const timeOfDay = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, 'Use HH:MM (24 h)');
 
 export const helpResourceSchema = z.object({
@@ -18,6 +20,8 @@ export const countryPackSchema = z.object({
   /** Age below which purchases need a guardian's approval. */
   guardianApprovalForPurchasesUnder: z.number().int(),
   schoolTypes: z.array(z.enum(['lowerSecondary', 'upperSecondary', 'vocational'])).nonempty(),
+  /** Subjects offered when adding an exam, in display order. */
+  subjects: z.array(z.enum(subjectIds)).nonempty(),
   grades: z.object({
     /** Numeric course grades. */
     course: z.object({ min: z.number(), max: z.number(), pass: z.number() }),

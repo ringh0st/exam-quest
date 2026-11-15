@@ -24,13 +24,13 @@ describe('app shell', () => {
     });
   });
 
-  it('takes a new student from the empty quest map to the exams tab', async () => {
+  it('takes a new student from the empty quest map to adding an exam', async () => {
     const user = userEvent.setup();
     const router = await renderRouter('./src/app', { initialUrl: '/' });
 
     await user.press(await screen.findByRole('button', { name: en.quests.emptyAction }));
-    expect(router.getPathname()).toBe('/exams');
-    expect(await screen.findByRole('header', { name: en.exams.title })).toBeOnTheScreen();
+    expect(router.getPathname()).toBe('/exams/new');
+    expect(await screen.findByRole('header', { name: en.exams.new.title })).toBeOnTheScreen();
   });
 
   it('turns on calm mode from the Me tab and saves it', async () => {
