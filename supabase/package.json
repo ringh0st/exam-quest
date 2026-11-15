@@ -1,0 +1,11 @@
+{
+  "name": "@exam-quest/supabase",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/*.test.mjs"
+  },
+  "devDependencies": {
+    "pg": "^8.23.1"
+  }
+}
