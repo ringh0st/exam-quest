@@ -37,6 +37,7 @@ export const fi: CountryPack = {
     finalExam: ['L', 'E', 'M', 'C', 'B', 'A', 'I'],
   },
   schoolHours: { start: '08:00', end: '15:00' },
+  weekStartsOn: 1,
   hasExamWeeks: true,
   helpResources: [
     { id: 'emergency', name: '112', kind: 'emergency', phone: '112' },

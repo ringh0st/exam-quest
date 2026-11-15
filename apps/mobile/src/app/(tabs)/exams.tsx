@@ -1,8 +1,10 @@
-import { Button, Card, EmptyState, Screen, Text, makeStyles } from '@exam-quest/ui';
+import { Button, Card, Chip, EmptyState, Screen, Text, makeStyles } from '@exam-quest/ui';
 import { router } from 'expo-router';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { View } from 'react-native';
 
+import { ExamCalendar } from '../../features/exams/ExamCalendar';
 import { today } from '../../features/exams/dates';
 import { daysUntil, pastExams, upcomingExams, type Exam } from '../../features/exams/model';
 import { useExams } from '../../features/exams/store';
@@ -16,6 +18,7 @@ export default function ExamsScreen() {
   const upcoming = upcomingExams(exams, todayDate);
   const past = pastExams(exams, todayDate);
   const [next, ...later] = upcoming;
+  const [view, setView] = useState<'list' | 'calendar'>('list');
 
   const addButton = (
     <Button
@@ -38,7 +41,26 @@ export default function ExamsScreen() {
         </>
       ) : (
         <>
-          {next ? (
+          <View style={styles.views}>
+            {(['list', 'calendar'] as const).map((option) => (
+              <Chip
+                key={option}
+                label={t(`exams.view.${option}`)}
+                selected={view === option}
+                onPress={() => setView(option)}
+              />
+            ))}
+          </View>
+
+          {view === 'calendar' ? (
+            <ExamCalendar
+              exams={exams}
+              todayDate={todayDate}
+              renderExam={(exam) => <ExamCard key={exam.id} exam={exam} todayDate={todayDate} />}
+            />
+          ) : null}
+
+          {view === 'list' && next ? (
             <View style={styles.section}>
               <Text variant="overline" color="textMuted">
                 {t('exams.nextUp')}
@@ -47,7 +69,7 @@ export default function ExamsScreen() {
             </View>
           ) : null}
 
-          {later.length > 0 ? (
+          {view === 'list' && later.length > 0 ? (
             <View style={styles.section}>
               <Text variant="overline" color="textMuted">
                 {t('exams.upcoming')}
@@ -60,7 +82,7 @@ export default function ExamsScreen() {
 
           {addButton}
 
-          {past.length > 0 ? (
+          {view === 'list' && past.length > 0 ? (
             <View style={styles.section}>
               <Text variant="overline" color="textMuted">
                 {t('exams.past')}
@@ -109,4 +131,5 @@ function ExamCard({
 
 const useStyles = makeStyles((theme) => ({
   section: { gap: theme.space[3] },
+  views: { flexDirection: 'row', gap: theme.space[2] },
 }));

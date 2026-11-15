@@ -92,7 +92,17 @@
       "notFoundTitle": "Exam not found",
       "notFoundBody": "It may have been deleted."
     },
-    "dateAndCountdown": "{{date}} · {{countdown}}"
+    "dateAndCountdown": "{{date}} · {{countdown}}",
+    "view": {
+      "list": "List",
+      "calendar": "Calendar"
+    },
+    "calendar": {
+      "previous": "Previous month",
+      "next": "Next month",
+      "dayWithExams": "{{date}}: {{subjects}}",
+      "noExamsOnDay": "No exams on {{date}}"
+    }
   },
   "add": {
     "title": "What are we studying?",
@@ -124,7 +134,11 @@
     "lessonLanguageOptions": {
       "source": "Same as my material",
       "en": "Always English"
-    }
+    },
+    "reminders": "Reminders",
+    "remindersDescription": "At most one a day. Never during school hours or at night.",
+    "studyTime": "Study reminder time",
+    "permissionDenied": "Notifications are turned off for Exam Quest. Turn them on in your phone settings to get reminders."
   },
   "subjects": {
     "motherTongue": "Mother tongue",
@@ -146,5 +160,19 @@
     "philosophy": "Philosophy",
     "psychology": "Psychology",
     "healthEducation": "Health education"
+  },
+  "reminders": {
+    "title": {
+      "weekBefore": "{{subjects}} in a week",
+      "threeDaysBefore": "{{subjects}} in 3 days",
+      "dayBefore": "{{subjects}} tomorrow",
+      "examMorning": "{{subjects}} today"
+    },
+    "body": {
+      "weekBefore": "10 minutes today starts your study plan.",
+      "threeDaysBefore": "Time for a quick review of your weak spots.",
+      "dayBefore": "Do your practice test, then get some sleep.",
+      "examMorning": "A 2-minute warm-up is ready. Good luck!"
+    }
   }
 }
