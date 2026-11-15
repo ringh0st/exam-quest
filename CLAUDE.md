@@ -15,7 +15,7 @@ apps/mobile/     Expo app. See apps/mobile/AGENTS.md for Expo rules.
   src/i18n/        Translations (typed keys).
 packages/ui/     Design system: tokens, themes, components. The only place visual values live.
 supabase/        Database migrations, row-level security, Edge Functions (EU region).
-ai/              AI prompts (versioned), evaluation sets and reports.
+ai/              AI pipeline (read → write → check), versioned prompts, schemas, evaluation.
 ```
 
 ## Commands
@@ -70,7 +70,12 @@ SDK. In sandboxes where Expo's API is unreachable, use `EXPO_OFFLINE=1 npx expo 
 
 - TypeScript strict (see `tsconfig.base.json`); no `any`; type-only imports use `import type`.
 - Business logic lives in plain, tested modules (`features/*`, `services/*`), not in components.
-- Validate every AI response against a schema before use; retry or fail gracefully.
+- Validate every AI response against a schema before use; retry or fail gracefully. The pipeline
+  lives in `ai/` (`readPages` → student fixes text → `writeQuest` → `checkQuest`/`applyCheck`);
+  calls go through the official `@anthropic-ai/sdk` with structured outputs (Zod) and the
+  server-side refusal fallback. Models per step are set in `ai/src/config.ts`.
+- Changing a prompt in `ai/src/prompts/` means bumping its version and running `npm run eval -w
+@exam-quest/ai` (costs money; ask first).
 - Supabase: schema changes are new files in `supabase/migrations/` (never edit an applied one);
   every table has row-level security, with a test in `supabase/tests/rls.test.mjs`.
 - Tests: unit tests for logic, component tests for UI, a few end-to-end tests for the main flow.
