@@ -13,6 +13,6 @@ describe('pickLanguage', () => {
 
 describe('i18n', () => {
   it('resolves keys from the English catalogue', () => {
-    expect(i18n.t('home.title')).toBe(en.home.title);
+    expect(i18n.t('quests.title')).toBe(en.quests.title);
   });
 });

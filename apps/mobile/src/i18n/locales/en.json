@@ -1,8 +1,4 @@
 {
-  "home": {
-    "title": "Exam Quest",
-    "subtitle": "Snap your book. Beat the test."
-  },
   "dev": {
     "components": {
       "title": "Components",
@@ -33,6 +29,56 @@
         "body": "Body text for lessons and explanations.",
         "caption": "Caption · From your page 2"
       }
+    }
+  },
+  "tabs": {
+    "quests": "Quests",
+    "exams": "Exams",
+    "add": "Add",
+    "squad": "Squad",
+    "me": "Me"
+  },
+  "quests": {
+    "title": "Quests",
+    "emptyTitle": "Your quest map appears here",
+    "emptyBody": "Add your next exam, then scan your pages. Each exam becomes a path of short levels with a boss fight on exam day.",
+    "emptyAction": "Add your next exam"
+  },
+  "exams": {
+    "title": "My exams",
+    "emptyTitle": "No exams yet",
+    "emptyBody": "Add an exam in three taps: subject, date, done. Mentora plans your study days up to it."
+  },
+  "add": {
+    "title": "What are we studying?",
+    "body": "Scan pages, paste text or pick a topic from the curriculum.",
+    "scan": "Scan pages",
+    "scanHint": "Book, notes, worksheet or the board",
+    "paste": "Paste text",
+    "pasteHint": "Notes, a PDF or slides",
+    "topic": "Pick a topic",
+    "topicHint": "From the curriculum",
+    "comingSoon": "Coming soon"
+  },
+  "squad": {
+    "title": "Study squad",
+    "emptyTitle": "Study better together",
+    "emptyBody": "Squads share one goal. They only see names, XP and levels, never your pages, grades or mistakes."
+  },
+  "me": {
+    "title": "Me",
+    "appearance": "Appearance",
+    "appearanceOptions": {
+      "system": "Same as phone",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "calmMode": "Calm mode",
+    "calmModeDescription": "Turns off XP, streaks, chests and boss fights. Your plan and reviews stay the same.",
+    "lessonLanguage": "Teach me in",
+    "lessonLanguageOptions": {
+      "source": "Same as my material",
+      "en": "Always English"
     }
   }
 }
