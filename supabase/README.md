@@ -1,6 +1,6 @@
 # Supabase
 
-Backend for Exam Quest, hosted in an EU region.
+Backend for Quest Note, hosted in an EU region.
 
 ## Layout
 

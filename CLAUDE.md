@@ -1,6 +1,6 @@
-# Exam Quest: rules for working in this repo
+# Quest Note: rules for working in this repo
 
-A mobile study app (iOS + Android, Expo / React Native, TypeScript). Students scan pages, paste text
+Quest Note (code name `exam-quest`) is a mobile study app (iOS + Android, Expo / React Native, TypeScript). Students scan pages, paste text
 or pick a topic; AI turns it into lessons, quizzes, flashcards and a gamified plan that ends on
 their exam date. Launch market: Finland (English UI first), then the EU. Users are 13+.
 
@@ -94,4 +94,4 @@ SDK. In sandboxes where Expo's API is unreachable, use `EXPO_OFFLINE=1 npx expo 
 
 - Small pull requests from a feature branch; never commit straight to `main`.
 - Fill in the PR template checklist. `npm run check` must pass.
-- Design reference: the Exam Quest design canvas (screens, flows, plan) shared by the founder.
+- Design reference: the Quest Note design canvas (screens, flows, plan) shared by the founder.
