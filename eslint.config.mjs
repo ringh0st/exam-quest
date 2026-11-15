@@ -3,6 +3,12 @@
 import expoConfig from 'eslint-config-expo/flat.js';
 import reactNative from 'eslint-plugin-react-native';
 
+// Calls whose object arguments are style definitions.
+const styleCalls = [
+  "CallExpression[callee.object.name='StyleSheet'][callee.property.name='create']",
+  "CallExpression[callee.name='makeStyles']",
+].join(', ');
+
 const designSystemMessage =
   'Use the matching component from @exam-quest/ui. It handles tokens, touch target size and accessibility.';
 
@@ -28,10 +34,13 @@ export default [
       'no-restricted-syntax': [
         'error',
         {
-          selector:
-            "CallExpression[callee.object.name='StyleSheet'][callee.property.name='create'] Property[value.type='Literal'][value.value>1]",
+          selector: `:matches(${styleCalls}) Property[value.type='Literal'][value.value>1]`,
           message:
             'No hard-coded sizes in styles. Use spacing, size and radius tokens from @exam-quest/ui.',
+        },
+        {
+          selector: `:matches(${styleCalls}) Property[value.type='Literal'][value.value=/^(#|rgb|hsl)/i]`,
+          message: 'No hard-coded colours in styles. Use theme colours from @exam-quest/ui.',
         },
       ],
 
