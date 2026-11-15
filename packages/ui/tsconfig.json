@@ -9,5 +9,5 @@
     "types": ["jest"],
     "noEmit": true
   },
-  "include": ["src"]
+  "include": ["src", "jest.setup.ts"]
 }

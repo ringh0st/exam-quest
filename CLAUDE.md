@@ -7,7 +7,12 @@ their exam date. Launch market: Finland (English UI first), then the EU. Users a
 ## Layout
 
 ```
-apps/mobile/     Expo app. Routes in src/app/ (Expo Router). See apps/mobile/AGENTS.md for Expo rules.
+apps/mobile/     Expo app. See apps/mobile/AGENTS.md for Expo rules.
+  src/app/         Routes (Expo Router). (tabs)/ holds Quests, Exams, Add, Squad, Me.
+  src/features/    Feature logic and state (zustand stores), e.g. features/settings.
+  src/config/      appConfig: limits and product rules (later served by the backend).
+  src/countries/   Country packs (zod-validated), e.g. fi.ts.
+  src/i18n/        Translations (typed keys).
 packages/ui/     Design system: tokens, themes, components. The only place visual values live.
 supabase/        Database migrations, row-level security, Edge Functions (EU region).
 ai/              AI prompts (versioned), evaluation sets and reports.
@@ -59,6 +64,7 @@ SDK. In sandboxes where Expo's API is unreachable, use `EXPO_OFFLINE=1 npx expo 
 - Announce important changes (quiz result, XP, "quest ready") to screen readers.
 - No mandatory time limits; every input has an alternative (scan, paste, type, voice).
 - Tests query by role and accessible name (`getByRole('button', { name })`), not by test IDs.
+  Route-level tests use `renderRouter('./src/app')` from `expo-router/testing-library`.
 
 ### Code quality
 
