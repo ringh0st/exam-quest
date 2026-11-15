@@ -71,7 +71,8 @@ SDK. In sandboxes where Expo's API is unreachable, use `EXPO_OFFLINE=1 npx expo 
 - TypeScript strict (see `tsconfig.base.json`); no `any`; type-only imports use `import type`.
 - Business logic lives in plain, tested modules (`features/*`, `services/*`), not in components.
 - Validate every AI response against a schema before use; retry or fail gracefully.
-- Supabase: schema changes are migrations; every table has row-level security.
+- Supabase: schema changes are new files in `supabase/migrations/` (never edit an applied one);
+  every table has row-level security, with a test in `supabase/tests/rls.test.mjs`.
 - Tests: unit tests for logic, component tests for UI, a few end-to-end tests for the main flow.
   React Native Testing Library v14: `render` is async (`await render(...)`).
 
