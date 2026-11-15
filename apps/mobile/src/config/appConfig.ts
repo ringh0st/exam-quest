@@ -11,6 +11,15 @@ export const appConfig = {
     maxPerDay: 1,
     /** Default quiet hours (local time, 24 h). The student can change them. */
     quietHours: { start: '22:00', end: '07:00' },
+    /** Time of the exam-morning warm-up reminder (after quiet hours, before school). */
+    examMorningTime: '07:30',
+    /** Study reminder times the student can choose from. */
+    studyTimeOptions: ['16:00', '17:00', '18:00', '19:00', '20:00'],
+    defaultStudyTime: '17:00',
+    /** Reminders a number of days before each exam, closest first (0 = exam morning). */
+    daysBefore: [0, 1, 3, 7],
+    /** How far ahead reminders are scheduled. Rescheduled whenever the app opens. */
+    horizonDays: 30,
   },
   streaks: {
     /** Streaks are weekly with rest days, never daily. */

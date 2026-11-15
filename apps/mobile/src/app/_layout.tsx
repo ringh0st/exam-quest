@@ -8,13 +8,17 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { useReminderSync } from '../features/reminders/useReminderSync';
 import { useSettings, useSettingsHydrated } from '../features/settings/store';
+import { configureNotificationHandler } from '../services/notifications';
 import { fontAssets } from '../theme/fonts';
 
 void SplashScreen.preventAutoHideAsync();
+configureNotificationHandler();
 
 function ThemedStack() {
   const theme = useTheme();
+  useReminderSync();
   return (
     <>
       <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
