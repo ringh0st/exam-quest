@@ -16,3 +16,11 @@ jest.mock('expo-crypto', () => ({
   ...jest.requireActual<object>('expo-crypto'),
   randomUUID: () => jest.requireActual<{ randomUUID: () => string }>('crypto').randomUUID(),
 }));
+
+// Native notification scheduling is not available in Jest. Tests can inspect these mocks.
+jest.mock('./src/services/notifications', () => ({
+  configureNotificationHandler: jest.fn(),
+  ensureNotificationPermission: jest.fn(() => Promise.resolve(true)),
+  replaceScheduledNotifications: jest.fn(() => Promise.resolve()),
+  cancelScheduledNotifications: jest.fn(() => Promise.resolve()),
+}));

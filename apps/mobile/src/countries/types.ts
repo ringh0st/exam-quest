@@ -30,6 +30,8 @@ export const countryPackSchema = z.object({
   }),
   /** No reminders during school hours (local time, weekdays). */
   schoolHours: z.object({ start: timeOfDay, end: timeOfDay }),
+  /** First day of the week in calendars: 0 Sunday, 1 Monday. */
+  weekStartsOn: z.union([z.literal(0), z.literal(1)]),
   /** Whether schools end study periods with exam weeks. */
   hasExamWeeks: z.boolean(),
   helpResources: z.array(helpResourceSchema).nonempty(),
