@@ -28,7 +28,9 @@
         "heading": "Heading",
         "body": "Body text for lessons and explanations.",
         "caption": "Caption · From your page 2"
-      }
+      },
+      "checkbox": "I'll only add material I'm allowed to use.",
+      "checkboxDescription": "Checkbox: the whole row is the target."
     }
   },
   "tabs": {
@@ -207,5 +209,28 @@
       "network": "Can't reach Quest Note. Check your connection and try again.",
       "unknown": "Something went wrong. Try again."
     }
+  },
+  "welcome": {
+    "title": "Before you start",
+    "intro": "Three quick things so Quest Note stays safe and fair for everyone.",
+    "age": "I'm {{age}} or older.",
+    "upload": "I'll only add material I'm allowed to use for my own studying, like my notes, handouts and school books. I won't add other people's private information.",
+    "uploadHint": "You're responsible for what you add. Quest Note uses it only to make your study material.",
+    "terms": "I agree to the Quest Note terms.",
+    "pointsTitle": "The terms in short",
+    "points": {
+      "ai": "Quest Note uses AI. It can make mistakes, so check important facts with your book or teacher.",
+      "private": "Your pages, grades and mistakes are private. Your squad never sees them.",
+      "delete": "You can delete your account and everything in it at any time."
+    },
+    "continue": "Continue",
+    "missing": "Tick all three boxes to continue.",
+    "saveFailed": "Couldn't save. Check your connection and try again.",
+    "done": "All set. Welcome to Quest Note!",
+    "underAge": "I'm under {{age}}",
+    "underAgeTitle": "Quest Note is for students {{age}} and older",
+    "underAgeBody": "Thanks for trying it. Ask a parent or teacher about other ways to study.",
+    "signOut": "Sign out",
+    "back": "Go back"
   }
 }

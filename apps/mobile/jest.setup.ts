@@ -36,3 +36,8 @@ jest.mock('./src/services/auth', () => ({
     return () => undefined;
   }),
 }));
+
+jest.mock('./src/services/profile', () => ({
+  fetchTermsAcceptedAt: jest.fn(() => Promise.resolve('2099-01-01T00:00:00Z')),
+  acceptTerms: jest.fn(() => Promise.resolve(true)),
+}));

@@ -5,6 +5,7 @@ import {
   ProgressBar,
   Text,
   ThemeProvider,
+  Checkbox,
   ToggleRow,
   makeStyles,
 } from '@exam-quest/ui';
@@ -39,6 +40,7 @@ function Preview({
   const { t } = useTranslation();
   const styles = useStyles();
   const [subject, setSubject] = useState<'biology' | 'math' | 'history'>('biology');
+  const [agreed, setAgreed] = useState(false);
 
   return (
     <SafeAreaView style={styles.root}>
@@ -51,6 +53,13 @@ function Preview({
           description={t('dev.components.calmModeDescription')}
           value={calm}
           onValueChange={onCalmChange}
+        />
+
+        <Checkbox
+          label={t('dev.components.checkbox')}
+          description={t('dev.components.checkboxDescription')}
+          checked={agreed}
+          onCheckedChange={setAgreed}
         />
 
         <Text variant="heading">{t('dev.components.text')}</Text>
