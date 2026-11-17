@@ -24,3 +24,15 @@ jest.mock('./src/services/notifications', () => ({
   replaceScheduledNotifications: jest.fn(() => Promise.resolve()),
   cancelScheduledNotifications: jest.fn(() => Promise.resolve()),
 }));
+
+// The backend is not reachable in Jest. Tests drive sign-in through these mocks; by default the
+// student is signed out and every call succeeds.
+jest.mock('./src/services/auth', () => ({
+  sendSignInCode: jest.fn(() => Promise.resolve({ ok: true })),
+  verifySignInCode: jest.fn(() => Promise.resolve({ ok: true })),
+  signOut: jest.fn(() => Promise.resolve()),
+  onSessionChange: jest.fn((callback: (user: null) => void) => {
+    callback(null);
+    return () => undefined;
+  }),
+}));
