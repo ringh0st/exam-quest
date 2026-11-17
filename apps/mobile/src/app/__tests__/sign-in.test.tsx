@@ -1,7 +1,7 @@
 import { userEvent } from '@testing-library/react-native';
 import { act, renderRouter, screen, waitFor } from 'expo-router/testing-library';
 
-import { setSessionUser } from '../../features/auth/session';
+import { setSessionUser, useSession } from '../../features/auth/session';
 import en from '../../i18n/locales/en.json';
 import { sendSignInCode, signOut, verifySignInCode } from '../../services/auth';
 
@@ -10,6 +10,7 @@ const verifyMock = jest.mocked(verifySignInCode);
 
 beforeEach(() => {
   jest.clearAllMocks();
+  useSession.setState({ status: 'loading' }, true);
 });
 
 async function openSignIn() {
@@ -89,7 +90,7 @@ describe('account card', () => {
   it('shows who is signed in and signs out', async () => {
     const user = userEvent.setup();
     await renderRouter('./src/app', { initialUrl: '/me' });
-    act(() => setSessionUser({ id: 'u1', email: 'aino@example.fi' }));
+    await act(async () => setSessionUser({ id: 'u1', email: 'aino@example.fi' }, 'given'));
 
     expect(await screen.findByText('Signed in as aino@example.fi')).toBeOnTheScreen();
     await user.press(screen.getByRole('button', { name: en.me.account.signOut }));

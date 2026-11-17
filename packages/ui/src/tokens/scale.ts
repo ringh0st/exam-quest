@@ -32,6 +32,8 @@ export const size = {
   /** Minimum touch target: 44 pt on iOS, 48 dp on Android. We use 48 on both. */
   minTouchTarget: 48,
   icon: { sm: 16, md: 24, lg: 32 },
+  /** Checkbox square and the tick drawn inside it. */
+  checkbox: { box: 24, tickWidth: 7, tickHeight: 13 },
   /** Height of the raised "3D" edge under game-style buttons and cards. */
   raisedEdge: 5,
 } as const;

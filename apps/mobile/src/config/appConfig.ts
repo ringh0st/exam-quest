@@ -3,6 +3,13 @@
  * without an app release); these values are the defaults.
  */
 export const appConfig = {
+  legal: {
+    /**
+     * Date the terms last changed in a way students must agree to again. Anyone who accepted
+     * before this date is asked again on their next visit.
+     */
+    termsUpdatedAt: '2026-11-17',
+  },
   auth: {
     /** Length of the one-time sign-in code sent by email (matches the Supabase email setting). */
     codeLength: 6,

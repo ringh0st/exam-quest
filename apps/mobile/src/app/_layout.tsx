@@ -2,13 +2,13 @@ import '../i18n';
 
 import { ThemeProvider, useTheme } from '@exam-quest/ui';
 import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
+import { Stack, router, usePathname, useRootNavigationState } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
-import { useSessionSync } from '../features/auth/session';
+import { useSession, useSessionSync } from '../features/auth/session';
 import { useReminderSync } from '../features/reminders/useReminderSync';
 import { useSettings, useSettingsHydrated } from '../features/settings/store';
 import { configureNotificationHandler } from '../services/notifications';
@@ -17,10 +17,24 @@ import { fontAssets } from '../theme/fonts';
 void SplashScreen.preventAutoHideAsync();
 configureNotificationHandler();
 
+/** A signed-in student who hasn't accepted the current terms is sent to the welcome step. */
+function useConsentGate() {
+  const consentNeeded = useSession(
+    (state) => state.status === 'signedIn' && state.consent === 'needed',
+  );
+  const pathname = usePathname();
+  // Navigating before the root navigator has mounted throws, so wait for it.
+  const navigationReady = Boolean(useRootNavigationState()?.key);
+  useEffect(() => {
+    if (navigationReady && consentNeeded && pathname !== '/welcome') router.replace('/welcome');
+  }, [navigationReady, consentNeeded, pathname]);
+}
+
 function ThemedStack() {
   const theme = useTheme();
   useReminderSync();
   useSessionSync();
+  useConsentGate();
   return (
     <>
       <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
@@ -32,6 +46,7 @@ function ThemedStack() {
       >
         <Stack.Screen name="exams/new" options={{ presentation: 'modal' }} />
         <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="welcome" options={{ gestureEnabled: false }} />
       </Stack>
     </>
   );

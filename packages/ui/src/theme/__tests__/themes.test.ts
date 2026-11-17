@@ -31,6 +31,10 @@ const nonTextPairs: Pair[] = [
   // Progress bar fills on their track.
   ['primary', 'surfaceSunken'],
   ['accent', 'surfaceSunken'],
+  // Checkbox: the empty box outline, and the filled box when checked.
+  ['textMuted', 'surface'],
+  ['textMuted', 'background'],
+  ['primary', 'background'],
 ];
 
 describe.each(Object.values(themes))('$name theme', (theme) => {

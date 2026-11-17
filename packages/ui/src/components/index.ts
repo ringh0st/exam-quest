@@ -3,6 +3,7 @@ export { Button, type ButtonProps, type ButtonVariant } from './Button';
 export { Card, type CardProps, type CardTone } from './Card';
 export { Chip, type ChipProps } from './Chip';
 export { ProgressBar, type ProgressBarProps } from './ProgressBar';
+export { Checkbox, type CheckboxProps } from './Checkbox';
 export { ToggleRow, type ToggleRowProps } from './ToggleRow';
 export { Screen, type ScreenProps } from './Screen';
 export { EmptyState, type EmptyStateProps } from './EmptyState';

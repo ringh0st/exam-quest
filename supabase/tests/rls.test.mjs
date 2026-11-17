@@ -98,6 +98,29 @@ describe('row-level security', () => {
   });
 });
 
+describe('profiles', () => {
+  it("lets a student record accepting the terms on their own profile, but not on anyone else's", async () => {
+    const [accepted] = await db.asStudent(
+      lina,
+      `update public.profiles set terms_accepted_at = now() where id = $1 returning terms_accepted_at`,
+      [lina],
+    );
+    assert.ok(accepted.terms_accepted_at);
+    assert.deepEqual(
+      await db.asStudent(
+        lina,
+        `update public.profiles set terms_accepted_at = now() where id = $1 returning id`,
+        [omar],
+      ),
+      [],
+    );
+    const [omars] = await db.query(`select terms_accepted_at from public.profiles where id = $1`, [
+      omar,
+    ]);
+    assert.equal(omars.terms_accepted_at, null);
+  });
+});
+
 describe('exams', () => {
   it('lets a student add an exam for themselves', async () => {
     const [exam] = await db.asStudent(
