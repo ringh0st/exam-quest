@@ -1,4 +1,5 @@
 import {
+  Button,
   Card,
   Chip,
   ErrorText,
@@ -8,16 +9,53 @@ import {
   makeStyles,
   type Appearance,
 } from '@exam-quest/ui';
+import { router } from 'expo-router';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { View } from 'react-native';
+import { AccessibilityInfo, View } from 'react-native';
 
 import { appConfig } from '../../config/appConfig';
+import { useSession } from '../../features/auth/session';
 import { useSettings, type LessonLanguage } from '../../features/settings/store';
+import { signOut } from '../../services/auth';
 import { ensureNotificationPermission } from '../../services/notifications';
 
 const appearances: readonly Appearance[] = ['system', 'light', 'dark'];
 const lessonLanguages: readonly LessonLanguage[] = ['source', 'en'];
+
+function AccountCard() {
+  const { t } = useTranslation();
+  const session = useSession();
+
+  if (session.status === 'loading') return null;
+
+  if (session.status === 'signedOut') {
+    return (
+      <Card>
+        <Text variant="heading">{t('me.account.title')}</Text>
+        <Text>{t('me.account.signedOut')}</Text>
+        <Button label={t('me.account.signIn')} onPress={() => router.push('/sign-in')} />
+      </Card>
+    );
+  }
+
+  const { email } = session.user;
+  return (
+    <Card>
+      <Text variant="heading">{t('me.account.title')}</Text>
+      <Text>{email ? t('me.account.signedInAs', { email }) : t('me.account.signedIn')}</Text>
+      <Button
+        label={t('me.account.signOut')}
+        variant="secondary"
+        onPress={() =>
+          void signOut().then(() =>
+            AccessibilityInfo.announceForAccessibility(t('me.account.signedOutAnnouncement')),
+          )
+        }
+      />
+    </Card>
+  );
+}
 
 export default function MeScreen() {
   const { t } = useTranslation();
@@ -38,6 +76,8 @@ export default function MeScreen() {
   return (
     <Screen>
       <Text variant="title">{t('me.title')}</Text>
+
+      <AccountCard />
 
       <Card>
         <ToggleRow

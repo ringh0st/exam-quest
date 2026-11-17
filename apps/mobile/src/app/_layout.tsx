@@ -8,6 +8,7 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
+import { useSessionSync } from '../features/auth/session';
 import { useReminderSync } from '../features/reminders/useReminderSync';
 import { useSettings, useSettingsHydrated } from '../features/settings/store';
 import { configureNotificationHandler } from '../services/notifications';
@@ -19,6 +20,7 @@ configureNotificationHandler();
 function ThemedStack() {
   const theme = useTheme();
   useReminderSync();
+  useSessionSync();
   return (
     <>
       <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
@@ -29,6 +31,7 @@ function ThemedStack() {
         }}
       >
         <Stack.Screen name="exams/new" options={{ presentation: 'modal' }} />
+        <Stack.Screen name="sign-in" options={{ presentation: 'modal' }} />
       </Stack>
     </>
   );

@@ -3,6 +3,10 @@
  * without an app release); these values are the defaults.
  */
 export const appConfig = {
+  auth: {
+    /** Length of the one-time sign-in code sent by email (matches the Supabase email setting). */
+    codeLength: 6,
+  },
   plans: {
     free: { scansPerWeek: 3, tutorMessagesPerDay: 10, practiceTests: 1 },
   },

@@ -13,6 +13,9 @@ export interface TextFieldProps extends Pick<
   | 'maxLength'
   | 'autoCapitalize'
   | 'autoComplete'
+  | 'autoCorrect'
+  | 'keyboardType'
+  | 'textContentType'
   | 'returnKeyType'
   | 'onSubmitEditing'
 > {
@@ -21,9 +24,9 @@ export interface TextFieldProps extends Pick<
   value: string;
   onChangeText: (value: string) => void;
   /** Helper text under the field, also read by screen readers. */
-  hint?: string;
+  hint?: string | undefined;
   /** Error message; shown under the field and announced when it appears. */
-  error?: string;
+  error?: string | undefined;
   placeholder?: string;
   multiline?: boolean;
 }
