@@ -16,3 +16,12 @@ describe('i18n', () => {
     expect(i18n.t('quests.title')).toBe(en.quests.title);
   });
 });
+
+describe('app name', () => {
+  it('never uses an old working name in user-facing text', () => {
+    const text = JSON.stringify(jest.requireActual('../locales/en.json'));
+    for (const oldName of ['Mentora', 'Exam Quest', 'Questnote']) {
+      expect(text).not.toContain(oldName);
+    }
+  });
+});

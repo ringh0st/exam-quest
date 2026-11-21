@@ -97,9 +97,11 @@ const useStyles = makeStyles((theme) => ({
     borderTopWidth: theme.borderWidth.regular,
   },
   label: { fontFamily: theme.fonts.medium },
+  // A pill that fits the icon slot, so the "Add" label underneath stays visible.
+  // The whole tab (icon and label) is the touch target.
   addIcon: {
     width: theme.size.minTouchTarget,
-    height: theme.size.minTouchTarget,
+    height: theme.size.icon.lg,
     borderRadius: theme.radius.pill,
     backgroundColor: theme.colors.accent,
     alignItems: 'center',
