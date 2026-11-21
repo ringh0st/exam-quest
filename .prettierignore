@@ -3,3 +3,7 @@ coverage
 .expo
 dist
 package-lock.json
+
+# Local research notes and reports (not committed)
+research_notes/
+reports/
