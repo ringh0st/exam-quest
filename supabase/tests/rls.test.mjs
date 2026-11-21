@@ -200,22 +200,197 @@ describe('study material', () => {
     );
   });
 
-  it('does not let a student change a source status (only the server pipeline does)', async () => {
+  it('does not let a student change a source status or kind (only the server pipeline does)', async () => {
     const linasSource = await idOf('sources', lina);
-    assert.deepEqual(
-      await db.asStudent(
-        lina,
-        `update public.sources set status = 'ready' where id = $1 returning id`,
-        [linasSource],
-      ),
-      [],
-    );
+    for (const change of [`status = 'ready'`, `kind = 'topic'`]) {
+      await assert.rejects(
+        db.asStudent(lina, `update public.sources set ${change} where id = $1`, [linasSource]),
+        /permission denied/,
+        change,
+      );
+    }
+    const [source] = await db.query(`select status, kind from public.sources where id = $1`, [
+      linasSource,
+    ]);
+    assert.deepEqual(source, { status: 'uploaded', kind: 'scan' });
   });
 
   it('only accepts new sources in the uploaded state', async () => {
     await assert.rejects(
       db.asStudent(lina, `insert into public.sources (kind, status) values ('paste', 'ready')`),
       /row-level security/,
+    );
+  });
+});
+
+describe('library', () => {
+  // Setup runs as the server; each student query is rolled back afterwards (see db.mjs).
+  const addSubject = (user, name) =>
+    db
+      .query(`insert into public.subjects (user_id, name) values ($1, $2) returning id`, [
+        user,
+        name,
+      ])
+      .then(([row]) => row.id);
+  const addUnit = (user, subjectId, title) =>
+    db
+      .query(
+        `insert into public.units (user_id, subject_id, title) values ($1, $2, $3) returning id`,
+        [user, subjectId, title],
+      )
+      .then(([row]) => row.id);
+
+  it('lets a student create subjects and units', async () => {
+    const [subject] = await db.asStudent(
+      lina,
+      `insert into public.subjects (name, unit_label) values ('Calculus I', 'lecture')
+       returning name, unit_label, level, tint`,
+    );
+    assert.deepEqual(subject, {
+      name: 'Calculus I',
+      unit_label: 'lecture',
+      level: 'standard',
+      tint: 'violet',
+    });
+    const biology = await addSubject(lina, 'Biology');
+    const [unit] = await db.asStudent(
+      lina,
+      `insert into public.units (subject_id, title) values ($1, 'Chapter 3') returning title`,
+      [biology],
+    );
+    assert.equal(unit.title, 'Chapter 3');
+  });
+
+  it('lets a student sort and rename their material', async () => {
+    const subject = await addSubject(lina, 'Biology');
+    const unit = await addUnit(lina, subject, 'Chapter 3: Photosynthesis');
+    const [sorted] = await db.asStudent(
+      lina,
+      `update public.sources set subject_id = $1, unit_id = $2, title = 'Notes 12 Nov'
+       where id = $3 returning subject_id, unit_id, title`,
+      [subject, unit, await idOf('sources', lina)],
+    );
+    assert.deepEqual(sorted, { subject_id: subject, unit_id: unit, title: 'Notes 12 Nov' });
+  });
+
+  it("keeps each student's subjects and units private", async () => {
+    const subject = await addSubject(lina, 'Secret diary of a biologist');
+    await addUnit(lina, subject, 'Week 1');
+    assert.deepEqual(
+      await db.asStudent(omar, `select id from public.subjects where id = $1`, [subject]),
+      [],
+    );
+    assert.deepEqual(
+      await db.asStudent(omar, `select id from public.units where subject_id = $1`, [subject]),
+      [],
+    );
+    assert.deepEqual(
+      await db.asStudent(omar, `update public.subjects set name = 'x' where id = $1 returning id`, [
+        subject,
+      ]),
+      [],
+    );
+  });
+
+  it("cannot put a unit in someone else's subject or sort material into someone else's unit", async () => {
+    const omarsSubject = await addSubject(omar, 'History');
+    const omarsUnit = await addUnit(omar, omarsSubject, 'Week 1');
+    await assert.rejects(
+      db.asStudent(lina, `insert into public.units (subject_id, title) values ($1, 'Sneaky')`, [
+        omarsSubject,
+      ]),
+    );
+    await assert.rejects(
+      db.asStudent(lina, `update public.sources set subject_id = $1, unit_id = $2 where id = $3`, [
+        omarsSubject,
+        omarsUnit,
+        await idOf('sources', lina),
+      ]),
+    );
+  });
+
+  it("rejects a unit that doesn't belong to the material's subject", async () => {
+    const biology = await addSubject(lina, 'Biology 2');
+    const mathsUnit = await addUnit(lina, await addSubject(lina, 'Maths'), 'Derivatives');
+    const source = await idOf('sources', lina);
+    await assert.rejects(
+      db.asStudent(lina, `update public.sources set subject_id = $1, unit_id = $2 where id = $3`, [
+        biology,
+        mathsUnit,
+        source,
+      ]),
+    );
+    const [inbox] = await db.asStudent(
+      lina,
+      `update public.sources set subject_id = null, unit_id = $1 where id = $2 returning unit_id`,
+      [mathsUnit, source],
+    );
+    assert.equal(inbox.unit_id, null, 'material in the inbox has no unit');
+  });
+
+  it('accepts the new kinds of material, starting in the inbox', async () => {
+    for (const kind of ['upload', 'recording']) {
+      const [row] = await db.asStudent(
+        lina,
+        `insert into public.sources (kind) values ($1) returning kind, subject_id`,
+        [kind],
+      );
+      assert.deepEqual(row, { kind, subject_id: null });
+    }
+  });
+
+  it('moves material back to the inbox when its subject is deleted', async () => {
+    const subject = await addSubject(lina, 'Chemistry');
+    const unit = await addUnit(lina, subject, 'Acids');
+    const [source] = await db.query(
+      `insert into public.sources (user_id, kind, subject_id, unit_id)
+       values ($1, 'paste', $2, $3) returning id`,
+      [lina, subject, unit],
+    );
+    const deleted = await db.asStudent(
+      lina,
+      `delete from public.subjects where id = $1 returning id`,
+      [subject],
+    );
+    assert.equal(deleted.length, 1, 'a student can delete their own subject');
+
+    await db.query(`delete from public.subjects where id = $1`, [subject]);
+    const [after] = await db.query(`select subject_id, unit_id from public.sources where id = $1`, [
+      source.id,
+    ]);
+    assert.deepEqual(after, { subject_id: null, unit_id: null });
+    assert.deepEqual(await db.query(`select id from public.units where id = $1`, [unit]), []);
+  });
+
+  it("links exams to the student's own subject and units only", async () => {
+    const subject = await addSubject(lina, 'Physics');
+    const unit = await addUnit(lina, subject, 'Lecture 5');
+    const exam = await idOf('exams', lina);
+    const [linked] = await db.asStudent(
+      lina,
+      `update public.exams set library_subject_id = $1 where id = $2 returning library_subject_id`,
+      [subject, exam],
+    );
+    assert.equal(linked.library_subject_id, subject);
+    const covered = await db.asStudent(
+      lina,
+      `insert into public.exam_units (exam_id, unit_id) values ($1, $2) returning unit_id`,
+      [exam, unit],
+    );
+    assert.equal(covered.length, 1);
+
+    const omarsUnit = await addUnit(omar, await addSubject(omar, 'Art'), 'Colour');
+    await assert.rejects(
+      db.asStudent(lina, `insert into public.exam_units (exam_id, unit_id) values ($1, $2)`, [
+        exam,
+        omarsUnit,
+      ]),
+    );
+    await assert.rejects(
+      db.asStudent(lina, `update public.exams set library_subject_id = $1 where id = $2`, [
+        await addSubject(omar, 'Music'),
+        exam,
+      ]),
     );
   });
 });
@@ -327,7 +502,10 @@ describe('account deletion', () => {
   it('removes everything that belongs to the student', async () => {
     const tables = [
       'profiles',
+      'subjects',
+      'units',
       'exams',
+      'exam_units',
       'sources',
       'source_pages',
       'lessons',
